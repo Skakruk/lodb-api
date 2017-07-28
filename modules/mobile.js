@@ -4,6 +4,8 @@ const request = require('request');
 const cheerio = require('cheerio');
 const url = require('url');
 
+const BookProlongationService = require('../services/BookProlongationService');
+
 const remoteHost = 'http://lodb.org.ua/';
 const remoteServer = 'http://lodb.org.ua/api';
 const COVER_MARKER = 'float: left; margin: 0 10px 10px 0;';
@@ -202,6 +204,17 @@ router.post('/catalog/search', (req, res) => {
             items: results
         });
     })
+});
+
+router.post('/book-prolongation', (req, res) => {
+    BookProlongationService.requestProlongation(req.body)
+        .then(() => {
+            res.status(200).json({message: 'Request sent'});
+        })
+        .catch((err) => {
+            console.error(err);
+            return res.status(503).json({message: 'Server error'});
+        });
 });
 
 module.exports = router;

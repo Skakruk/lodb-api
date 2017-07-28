@@ -1,14 +1,15 @@
-let express = require('express'),
-    cors = require('cors'),
-    bodyParser = require('body-parser'),
-    busboyBodyParser = require('busboy-body-parser'),
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const busboyBodyParser = require('busboy-body-parser');
     // articleRoutes = require('./modules/articles'),
     // authRoutes = require('./modules/auth').router,
     // userRoutes = require('./modules/user'),
 	// mediaRoutes = require('./modules/media'),
-	mobileRoutes = require('./modules/mobile');
+const mobileRoutes = require('./modules/mobile');
 
-var app = express();
+const app = express();
 
 app.use(cors());
 
@@ -29,7 +30,7 @@ app.use('/assets', express.static(__dirname + '/assets'));
 
 app.use('/mobile', mobileRoutes);
 
-var server = app.listen(3001, function () {
+const server = app.listen(3001, function () {
     console.log('API listening on port 3001!');
 });
 
