@@ -90,6 +90,13 @@ router.get('/latest-arrivals', (req, res) => {
     })
 });
 
+router.get('/lost-items', (req, res) => {
+    request({
+        url: `${remoteServer}/lost-items`,
+        json: true
+    }, (err, remoteResponse, body) => res.json(body))
+});
+
 const chlibEndpoint = 'http://www.chl.kiev.ua/MarcWeb_L/';
 const autocompletePath = 'Dict.asp';
 const dictsByType = {
@@ -130,6 +137,7 @@ router.get('/catalog/autocomplete', (req, res) => {
                 PageSize: 10
             }
         }, (err, remoteRes) => {
+            console.log(remoteRes);
             const $ = cheerio.load(remoteRes.body, {decodeEntities: false});
             let results = $('table tr')
                 .map((i, elem) => $(elem).find('td a'))
